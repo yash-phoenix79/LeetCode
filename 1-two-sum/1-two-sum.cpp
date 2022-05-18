@@ -9,7 +9,7 @@ public:
             if(m.find(nums[i])!=m.end())
             {
                 ans={m[nums[i]],i};
-                break;
+                return ans;
             }
             m[target-nums[i]]=i;
         }
