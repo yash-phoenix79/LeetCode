@@ -1,22 +1,19 @@
 class Solution {
 public:
+    
+    int find(vector<int>&nums,vector<int>&dp,int pos){
+        if(pos>=size(nums)-1)return 0;
+        if(dp[pos]!=10001)return dp[pos];
+        
+        for(int i=1;i<=nums[pos];i++)
+        dp[pos]=min(dp[pos],1+find(nums,dp,pos+i));
+        
+        return dp[pos];
+        
+    }
+    
     int jump(vector<int>& nums) {
-        int n=nums.size();
-        vector<int>dis(n,INT_MAX);
-        
-        if(n==1)
-            return 0;
-        
-        dis[0]=0;
-        
-        for(int i=0;i<n;i++){
-            for(int j=1;j<=nums[i];j++){
-                dis[i+j]=min(dis[i+ j],dis[i]+1);
-                if(dis[n-1]!=INT_MAX)
-                    return dis[n-1];
-            }
-                
-        }
-        return dis[n-1];
+        vector<int>dp(nums.size(),10001);
+        return find(nums,dp,0);
     }
 };
