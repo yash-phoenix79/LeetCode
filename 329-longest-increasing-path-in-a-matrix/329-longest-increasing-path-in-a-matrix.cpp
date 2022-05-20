@@ -1,20 +1,32 @@
 class Solution {
 public:
-    int dp[200][200]{}; // constraints are small enough that we can just set them to MAX
-int maxPath, n, m;
-int longestIncreasingPath(vector<vector<int>>& matrix) {
-	maxPath = 0, n = size(matrix), m = size(matrix[0]);
-	for(int i = 0; i < n; i++)
-		for(int j = 0; j < m; j++)
-			maxPath = max(maxPath, solve(matrix, i, j, -1));            
-	return maxPath;
-}
-int solve(vector<vector<int>>& mat, int i, int j, int prev){
-	if(i < 0 || j < 0 || i >= n || j >= m || mat[i][j] <= prev) return 0;
-	if(dp[i][j]) return dp[i][j];
-	return dp[i][j] = 1 + max({ solve(mat, i + 1, j, mat[i][j]),
-							    solve(mat, i - 1, j, mat[i][j]),
-							    solve(mat, i, j + 1, mat[i][j]),
-							    solve(mat, i, j - 1, mat[i][j]) });       
-}
+    int maxLen=0;
+    int d[5]={1,0,-1,0,1};
+    int findPath(int i,int j,vector<vector<int>>&dp,vector<vector<int>>& mat){
+        int n=size(mat),m=size(mat[0]);
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+        int t=1;
+        for(int k=0;k<4;k++){
+            int newX=i+d[k],newY=j+d[k+1];
+            if(newX<0||newX>=n||newY<0||newY>=m||mat[newX][newY]<=mat[i][j])
+                continue;
+            t=max(t,1+findPath(newX,newY,dp,mat));
+        }
+        return dp[i][j]=t;
+        
+    }
+    
+    int longestIncreasingPath(vector<vector<int>>& mat) {
+        int n=mat.size(),m=mat[0].size();
+        
+        vector<vector<int>>dp(n,vector<int>(m,-1));
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                maxLen=max(maxLen,findPath(i,j,dp,mat));
+            }
+        }
+        return maxLen;
+    }
 };
