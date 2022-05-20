@@ -27,7 +27,7 @@ public:
             return true;
         ListNode*cur=head,*slow=head,*fast=head,*prev;
         
-        while(fast!=NULL){
+        while(1){
             prev=slow;
             slow=slow->next;
             fast=fast->next->next;
