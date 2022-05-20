@@ -1,16 +1,19 @@
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        int maxLen=0,start=-1;
+        int n=s.length();
+        int start=-1;
+        int maxLen=0;
         vector<int>dict(256,-1);
         
-      for(int i=0;i<s.length();i++){
-          if(dict[s[i]]>start){
-              start=dict[s[i]];
-          }
-          dict[s[i]-'\0']=i;
-          maxLen=max(maxLen,i-start);
-      }  
+        for(int i=0;i<n;i++){
+            if(dict[s[i]]>start)
+            {
+                start=dict[s[i]];
+            }
+            dict[s[i]]=i;
+            maxLen=max(maxLen,i-start);
+        }
         return maxLen;
     }
 };
