@@ -10,57 +10,29 @@
  */
 class Solution {
 public:
-    
-   
-    ListNode* reverse(ListNode* head){
-        if(!head||!head->next)
-            return head;
-        ListNode* prev=NULL,*cur=head,*temp;
-        while(cur){
-            temp=cur->next;
-            cur->next=prev;
-            prev=cur;
-            cur=temp;
-        }
-        return prev;
-    }
-    
-     int getLen(ListNode* head)
-    {
-        int len=0;
-        while(head){
-            len++;
-            head=head->next;
-        }
-        return len;
-    }
-    
-    
     ListNode* rotateRight(ListNode* head, int k) {
-        
         if(!head||!head->next)
             return head;
         
-        int n=getLen(head);
-        if(n<k)
-            k%=n;
-        else if(k==n)
-            return head;
-        k=n-k;
-        
-        ListNode* prev=NULL,*cur=head,*temp,*dum=head;
-        
-        while(k--)
-        {
-            temp=cur->next;
-            cur->next=prev;
-            prev=cur;
-            cur=temp;
+        ListNode* newH,*newT=head,*tail=head;
+        int len=0;
+        while(tail){
+            len++;
+            newT=tail;
+            tail=tail->next;
         }
         
-        dum->next=reverse(cur);
+        newT->next=head;
         
-        return reverse(prev);
+        if(k%=len){
+            for(int i=0;i<(len-k);i++)
+                newT=newT->next;
+        }
+        
+        newH=newT->next;
+        newT->next=NULL;
+        
+        return newH;
         
     }
 };
