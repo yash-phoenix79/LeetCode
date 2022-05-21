@@ -1,21 +1,12 @@
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        
-        int n=nums.size();
-        int idx=0,cur=idx+1;
-        while(cur<n){
-            while(cur<n&&nums[cur]==nums[cur-1])
-                cur++;
-            if(cur>=n&&nums[idx]!=nums[cur-1])
-                nums[++idx]=nums[n-1];
-            else if(cur<n)
-           nums[++idx]=nums[cur++];
-            
+        int left=0;
+        for(int right=1;right<nums.size();right++){
+            if(nums[left]!=nums[right])
+                left++;
+            nums[left]=nums[right];
         }
-        
-        nums.resize(idx+1);
-      
-        return idx+1;
+        return left+1;
     }
 };
