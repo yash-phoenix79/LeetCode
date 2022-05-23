@@ -9,10 +9,12 @@ public:
             maxL=max(maxL,height[i]);
             maxR=max(maxR,height[j]);
             if(maxL<=maxR){
-                ans+=(maxL-height[i++]);
+                ans+=(maxL-height[i]);
+                i++;
            }
             else{
-                ans+=(maxR-height[j--]);
+                ans+=(maxR-height[j]);
+                j--;
             }
         }
         return ans;
