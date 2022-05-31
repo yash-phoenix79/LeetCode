@@ -3,11 +3,11 @@ public:
     bool hasAllCodes(string s, int k) {
         int n=s.length();
        
-        map<string,int>m;
+        unordered_set<string>m;
         
        for(int i=0;i<=n-k;i++){
-           if(!m[s.substr(i,k)])
-               m[s.substr(i,k)]++;
+          m.insert(s.substr(i,k));
+           
        }
         
         if(m.size()==1<<k)
