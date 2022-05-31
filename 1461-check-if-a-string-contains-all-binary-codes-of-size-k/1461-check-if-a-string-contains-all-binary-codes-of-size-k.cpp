@@ -6,7 +6,7 @@ public:
         unordered_map<string,int>m;
         
        for(int i=0;i<=n-k;i++){
-           if(m.find(s.substr(i,k))==m.end())
+           if(!m[s.substr(i,k)])
                m[s.substr(i,k)]++;
        }
         
