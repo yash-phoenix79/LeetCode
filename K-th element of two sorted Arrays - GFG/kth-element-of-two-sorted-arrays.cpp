@@ -8,19 +8,32 @@ class Solution{
     public:
     int kthElement(int arr1[], int arr2[], int n, int m, int k)
     {
-        vector<int>temp(m+n);
-        int i=0;
-        for( i=0;i<n;i++)
-        temp[i]=arr1[i];
         
+        if(n>m)
+        return kthElement(arr2,arr1,m,n,k);
+        int cnt1=0,cnt2=0;
         
-        for(int j=0;j<m;j++)
-        temp[i++]=arr2[j];
+        int l=max(0,k-m),h=min(k,n);
+        int l1,l2,r1,r2;
         
-        sort(begin(temp),end(temp));
-        
-        return temp[k-1];
-        
+        while(l<=h){
+           cnt1=(l+h)/2;
+           cnt2=(k)-cnt1;
+           
+           l1=cnt1==0?INT_MIN:arr1[cnt1-1];
+           l2=cnt2==0?INT_MIN:arr2[cnt2-1];
+           r1=cnt1==n?INT_MAX:arr1[cnt1];
+           r2=cnt2==m?INT_MAX:arr2[cnt2];
+           
+           if(l1<=r2&&(l2<=r1))
+           return max(l1,l2);
+           else if(l1>r2){
+               h=cnt1-1;
+           }
+           else
+           l=cnt1+1;
+           
+        }
         
     }
 };
