@@ -35,6 +35,7 @@ public:
                 board[i][idx]='.';
             }
         }
+        return;
     }
     
     vector<vector<string>> solveNQueens(int n) {
