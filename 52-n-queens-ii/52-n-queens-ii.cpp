@@ -2,26 +2,26 @@ class Solution {
 public:
     int res=0;
     
-    bool check(int x,int y,vector<vector<int>>&Queens){
+    bool check(int x,int y,vector<vector<bool>>&Queens){
         int n=Queens.size();
         for(int i=0;i<x;i++){
-            if(Queens[i][y]==1)
+            if(Queens[i][y])
                 return false;
         }
         int i=x,j=y;
         while(i>=0&&j>=0){
-            if(Queens[i--][j--]==1)
+            if(Queens[i--][j--])
                 return false;
         }
         i=x,j=y;
         while(i>=0&&j<n){
-            if(Queens[i--][j++]==1)
+            if(Queens[i--][j++])
                 return false;
         }
         return true;
     }
     
-    void solve(int x,int n,vector<vector<int>>&Queens){
+    void solve(int x,int n,vector<vector<bool>>&Queens){
         if(x==n)
         {
             res++;
@@ -40,7 +40,7 @@ public:
     
     int totalNQueens(int n) {
         
-        vector<vector<int>>Queens(n,vector<int>(n,0));
+        vector<vector<bool>>Queens(n,vector<bool>(n,0));
         solve(0,n,Queens);
         return res;
         
