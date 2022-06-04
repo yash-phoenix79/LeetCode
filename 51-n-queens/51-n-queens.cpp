@@ -2,7 +2,7 @@ class Solution {
 public:
      vector<vector<string>> ans;
     
-    bool check(int y,int x,vector<vector<char>>board)
+    bool check(int y,int x,vector<vector<char>>&board)
     {
     int n=board.size();
         for(int i=0;i<=x;i++){
@@ -22,7 +22,7 @@ public:
         return true;
     }   
     
-    void solve(int i,int n,vector<vector<char>>board){
+    void solve(int i,int n,vector<vector<char>>&board){
      if(i==n)
      {
          vector<string>res;
