@@ -2,10 +2,10 @@ class Solution {
 public:
      vector<vector<string>> ans;
     
-    bool check(int y,int x,vector<string>board)
+    bool check(int y,int x,vector<vector<char>>board)
     {
     int n=board.size();
-        for(int i=0;i<n;i++){
+        for(int i=0;i<=x;i++){
             if(board[i][y]=='Q')
                 return false;
         }
@@ -22,10 +22,17 @@ public:
         return true;
     }   
     
-    void solve(int i,int n,vector<string>board){
+    void solve(int i,int n,vector<vector<char>>board){
      if(i==n)
      {
-         ans.push_back(board);
+         vector<string>res;
+         for(int x=0;x<n;x++){
+             string t="";
+             for(int y=0;y<n;y++)
+                 t+=board[x][y];
+             res.push_back(t);
+         }
+         ans.push_back(res);
          return;
      }
         for(int idx=0;idx<n;idx++){
@@ -40,11 +47,7 @@ public:
     
     vector<vector<string>> solveNQueens(int n) {
         
-        vector<string>board(n);
-        string t(n,'.');
-        for(int i=0;i<n;i++){
-            board[i]=t;
-        }
+        vector<vector<char>>board(n,vector<char>(n,'.'));
         solve(0,n,board);
         return ans;
     }
