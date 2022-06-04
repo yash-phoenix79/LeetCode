@@ -1,25 +1,22 @@
 class Solution {
 public:
-    int res=0;
-    
-    void solve(int i,int n,vector<int>&col,vector<int>&diag,vector<int>&alt_diag){
-        if(i==n){
-            res++;
-            return;
-        }
+   
+    int solve(int x,int n,int col,int diag,int alt_diag){
+        if(x==n)
+            return 1;
+         int res=0;
         for(int y=0;y<n;y++){
-            if(!col[y]&&!diag[i+y]&&!alt_diag[i-y+n-1]){
-                col[y]=1,diag[i+y]=1,alt_diag[i-y+n-1]=1;
-                solve(i+1,n,col,diag,alt_diag);
-                col[y]=0,diag[i+y]=0,alt_diag[i-y+n-1]=0;
+            
+            if(!(col&(1<<y))&&!(diag&(1<<(x+y)))&&!(alt_diag&(1<<(x-y+n-1)))){
+               res+=(solve(x+1,n,col|(1<<y),diag|(1<<(x+y)),alt_diag|(1<<(x-y+n-1))));
             }
         }
-        return;
+        return res;
     }
     
     int totalNQueens(int n) {
-        vector<int>col(n,0),diag(2*n+1,0),alt_diag(2*n+1,0);
-        solve(0,n,col,diag,alt_diag);
-        return res;
+        int col=0,diag=0,alt_diag=0;
+        return solve(0,n,col,diag,alt_diag);
+        
     }
 };
