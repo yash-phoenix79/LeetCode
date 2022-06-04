@@ -2,47 +2,24 @@ class Solution {
 public:
     int res=0;
     
-    bool check(int x,int y,vector<vector<bool>>&Queens){
-        int n=Queens.size();
-        for(int i=0;i<x;i++){
-            if(Queens[i][y])
-                return false;
-        }
-        int i=x,j=y;
-        while(i>=0&&j>=0){
-            if(Queens[i--][j--])
-                return false;
-        }
-        i=x,j=y;
-        while(i>=0&&j<n){
-            if(Queens[i--][j++])
-                return false;
-        }
-        return true;
-    }
-    
-    void solve(int x,int n,vector<vector<bool>>&Queens){
-        if(x==n)
-        {
+    void solve(int i,int n,vector<int>&col,vector<int>&diag,vector<int>&alt_diag){
+        if(i==n){
             res++;
             return;
         }
-        
         for(int y=0;y<n;y++){
-            if(check(x,y,Queens)){
-                Queens[x][y]=1;
-                solve(x+1,n,Queens);
-                Queens[x][y]=0;
+            if(!col[y]&&!diag[i+y]&&!alt_diag[i-y+n-1]){
+                col[y]=1,diag[i+y]=1,alt_diag[i-y+n-1]=1;
+                solve(i+1,n,col,diag,alt_diag);
+                col[y]=0,diag[i+y]=0,alt_diag[i-y+n-1]=0;
             }
         }
         return;
     }
     
     int totalNQueens(int n) {
-        
-        vector<vector<bool>>Queens(n,vector<bool>(n,0));
-        solve(0,n,Queens);
+        vector<int>col(n,0),diag(2*n+1,0),alt_diag(2*n+1,0);
+        solve(0,n,col,diag,alt_diag);
         return res;
-        
     }
 };
