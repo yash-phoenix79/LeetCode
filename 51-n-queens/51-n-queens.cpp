@@ -2,7 +2,7 @@ class Solution {
 public:
      vector<vector<string>> ans;
     
-    bool check(int y,int x,vector<vector<char>>&board)
+    bool check(int y,int x, vector<string>&board)
     {
     int n=board.size();
         for(int i=0;i<=x;i++){
@@ -22,7 +22,7 @@ public:
         return true;
     }   
     
-    void solve(int i,int n,vector<vector<char>>&board){
+    void solve(int i,int n, vector<string>&board){
      if(i==n)
      {
          vector<string>res;
@@ -47,7 +47,7 @@ public:
     
     vector<vector<string>> solveNQueens(int n) {
         
-        vector<vector<char>>board(n,vector<char>(n,'.'));
+    vector<string>board(n,string(n,'.'));
         solve(0,n,board);
         return ans;
     }
