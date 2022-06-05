@@ -8,9 +8,11 @@ public:
             m=(l+r)/2;
             if(nums[m]==target)
                 return true;
-            if(nums[l]==nums[m]&&nums[r]==nums[m]){
-                l++,r--;
+            if(nums[l]==nums[m]){
+                l++;
             }
+            else if(nums[r]==nums[m])
+                r--;
             else if(nums[l]<=nums[m]){
                 if(nums[l]<=target&&target<nums[m])
                     r=m-1;
