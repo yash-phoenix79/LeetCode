@@ -1,20 +1,26 @@
 class Solution {
 public:
     vector<string> findRestaurant(vector<string>& l1, vector<string>& l2) {
-        vector<string>res;
-        int idx,mini=INT_MAX;
-        for(int i=0;i<l1.size();i++){
-            for(int j=0;j<l2.size();j++){
-                if(l1[i]==l2[j]){
-                    if(i+j<mini){
-                        res.clear();
-                        res.push_back(l1[i]);
-                        mini=i+j;
-                    }
-                    else if(i+j==mini)
-                        res.push_back(l1[i]);
-                }
-            }
+         vector<string> res;
+        unordered_map<string,int>m1,m2;
+        for(int i=0;i<size(l1);i++)
+            m1[l1[i]]=i;
+        for(int i=0;i<size(l2);i++)
+        {
+            if(m1.count(l2[i])>0)
+                m2[l2[i]]=(m1[l2[i]])+i;
+        }
+        
+        int mini=size(l1)+size(l2)+1;
+        
+        for(auto m:m2){
+            if(m.second<mini)
+                mini=m.second;
+        }
+        
+        for(auto m:m2){
+            if(m.second==mini)
+                res.push_back(m.first);
         }
         return res;
     }
