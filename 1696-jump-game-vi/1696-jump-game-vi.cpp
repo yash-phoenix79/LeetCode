@@ -1,18 +1,21 @@
 class Solution {
 public:
     int maxResult(vector<int>& nums, int k) {
-        long cnt=0;
+        long cur=0;
         deque<int>q;
         
-        for(int i=nums.size()-1;i>=0;i--){
-            cnt=nums[i]+(q.empty()?0:nums[q.front()]);
-            while(!q.empty()&&cnt>=nums[q.back()])
-                q.pop_back();
-            q.push_back(i);
-            if(q.front()>=i+k)
+        for(int i=0;i<nums.size();i++){
+           
+            while(!q.empty()&&q.front()+k<i)
                 q.pop_front();
-            nums[i]=cnt;
+             cur=nums[i]+(q.empty()?0:nums[q.front()]);
+            while(!q.empty()&&cur>=nums[q.back()])
+                q.pop_back();
+            
+            q.push_back(i);
+            nums[i]=cur;
+            
         }
-        return cnt;
+        return cur;
     }
 };
