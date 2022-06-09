@@ -1,17 +1,24 @@
 class Solution {
 public:
-    bool isHappy(int n) {
-        unordered_map<int,int>s;
+    
+    int next(int n){
         int sum=0;
-        while(n!=1&&s[n]==0){
-            s[n]++;
-            sum=0;
-            while(n){
-                sum+=(pow(n%10,2));
-                n/=10;
-            }
-            n=sum;
+        while(n){
+            sum+=(n%10)*(n%10);
+            n/=10;
         }
-        return n==1;
+        return sum;
+    }
+    
+    bool isHappy(int n) {
+        
+        int slow=next(n);
+        int fast=next(next(n));
+        
+        while(slow!=fast){
+            slow=next(slow);
+            fast=next(next(fast));
+        }
+        return slow==1;
     }
 };
