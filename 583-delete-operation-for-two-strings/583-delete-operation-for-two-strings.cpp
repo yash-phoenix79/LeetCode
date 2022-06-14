@@ -1,19 +1,21 @@
 class Solution {
 public:
     int minDistance(string word1, string word2) {
+        if(word1.size()>word2.size())
+            swap(word1,word2);
         int m=word1.size(),n=word2.size();
-        vector<vector<int>>seq(m+1,vector<int>(n+1,0));
-        for(int i=0;i<=m;i++){
-            for(int j=0;j<=n;j++){
+        vector<vector<int>>dp(2,vector<int>(m+1));
+        
+        for(int i=0;i<=n;i++){
+            for(int j=0;j<=m;j++){
                 if(i==0||j==0)
-                    seq[i][j]=0;
-                else if(word1[i-1]==word2[j-1])
-                    seq[i][j]=1+seq[i-1][j-1];
+                    dp[i&1][j]=0;
+                else if(word1[j-1]==word2[i-1])
+                    dp[i&1][j]=1+dp[(i-1)&1][j-1];
                 else
-                    seq[i][j]=max(seq[i-1][j],seq[i][j-1]);
+                    dp[i&1][j]=max(dp[i&1][j-1],dp[(i-1)&1][j]);
             }
         }
-        int ans= (m+n)-(2*seq[m][n]);
-        return ans;
+        return m+n-2*dp[n&1][m];
     }
 };
