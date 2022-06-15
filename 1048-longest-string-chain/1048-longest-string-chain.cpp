@@ -17,7 +17,7 @@ public:
                 string pre=i.substr(0,j)+i.substr(j+1);
                 if(dp.find(pre)!=dp.end())
                 {
-                    dp[i]=dp[pre]+1;
+                    dp[i]=max(dp[i],dp[pre]+1);
                     res=max(res,dp[i]);
                    
                 }
