@@ -10,38 +10,43 @@
  */
 class Solution {
 public:
-    
-    ListNode*l;
-    bool stop=false;
-    
-    void reverse(ListNode* r,int left,int right){
-        if(right==1){
-           
-              return;
-        }
-          
-     
-        r=r->next;
-        
-        if(left>1){
-            l=l->next;
-        }
-        
-        reverse(r,left-1,right-1);
-        
-        if(l==r||r->next==l)
-            stop=true;
-        if(!stop){
-            swap(l->val,r->val);
-            l=l->next;
-        }
-        
-    }
-    
     ListNode* reverseBetween(ListNode* head, int left, int right) {
-        l=head;
-        ListNode* r=head;
-        reverse(r,left,right);
+        
+        if(!head||!head->next||left==right)
+            return head;
+        
+        ListNode*prev=NULL,*cur=head;
+        ListNode*tail=NULL,*con;
+        
+        
+        while(left>1){
+            prev=cur;
+            cur=cur->next;
+            left--;
+            right--;
+        }
+        
+        con=prev;
+        tail=cur;
+        
+ 
+        ListNode* temp;
+        while(right>0){
+            temp=cur->next;
+            cur->next=prev;
+            prev=cur;
+            cur=temp;
+            right--;
+        }
+        if(con!=NULL){
+            con->next=prev;
+            
+        }
+        
+        else
+           head=prev;
+     
+        tail->next=cur;
         return head;
     }
 };
