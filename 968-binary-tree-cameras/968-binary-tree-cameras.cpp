@@ -11,18 +11,25 @@
  */
 class Solution {
 public:
-    int res = 0;
-    int minCameraCover(TreeNode* root) {
-        return (dfs(root) < 1 ? 1 : 0) + res;
-    }
-
-    int dfs(TreeNode* root) {
-        if (!root) return 2;
-        int left = dfs(root->left), right = dfs(root->right);
-        if (left == 0 || right == 0) {
+    
+    int res=0;
+    
+    int dfs(TreeNode* root){
+        if(!root)return 2;
+        int l=dfs(root->left),r=dfs(root->right);
+        if(l==0||r==0)
+        {
             res++;
             return 1;
         }
-        return left == 1 || right == 1 ? 2 : 0;
+        if(l==1||r==1)
+            return 2;
+        return 0;
+    }
+    
+    int minCameraCover(TreeNode* root) {
+        
+        return( dfs(root)<1?1:0)+res;
+        
     }
 };
