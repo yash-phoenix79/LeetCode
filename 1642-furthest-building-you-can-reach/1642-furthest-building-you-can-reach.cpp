@@ -6,21 +6,21 @@ public:
         priority_queue<int,vector<int>,greater<int>>pq;
         
         int i;
-        for(i=0;i<n-1;i++){
-            if(h[i+1]-h[i]>0){
-                pq.push(h[i+1]-h[i]);}
+        for(i=0;i<n-1;i++)
+        {
+            if(h[i+1]-h[i]>0)
+                pq.push(h[i+1]-h[i]);
             
                 if(pq.size()>ladders)
-                {
-                    if(pq.top()<=bricks){
-                        bricks-=pq.top();
+                    {
+                    bricks-=pq.top();
                         pq.pop();
                     }
-                    else
+                    if(bricks<0)
                         break;
-                
-            }
-        }
+           }
+        
+
         return i;
     }
 };
