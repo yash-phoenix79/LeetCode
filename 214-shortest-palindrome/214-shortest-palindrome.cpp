@@ -19,11 +19,12 @@ public:
         int i=0,j=1;
         
         while(j<n){
+            i=pref[j-1];
             while(i!=0&&t[i]!=t[j])
                 i=pref[i-1];
             if(t[j]==t[i]){
                 pref[j]=i+1;
-                i++;
+               
                 j++;
             }
             else{
