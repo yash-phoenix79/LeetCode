@@ -1,25 +1,38 @@
 class Solution {
 public:
+    
+    int isElementlessthan(int cur,vector<vector<int>>& mat)
+    {
+        int n=mat.size();
+        int x=0,y=n-1;
+        
+        int cnt=0;
+         for(x=0;x<n;x++){
+             while(y>=0&&mat[x][y]>cur)y--;
+             cnt+=(y+1);
+         }
+        
+        return cnt;
+    }
+    
     int kthSmallest(vector<vector<int>>& mat, int k) {
         
         int n=mat.size();
-        priority_queue<vector<int>,vector<vector<int>>,greater<>>pq;
+        int l=mat[0][0],h=mat[n-1][n-1];
         
-        for(int i=0;i<n;i++)
-            pq.push({mat[i][0],i,0});
-        
-        int ans;
-        
-        for(int i=1;i<=k;i++){
-            auto cur=pq.top();
-            pq.pop();
-            int x=cur[1],y=cur[2];
-            ans=cur[0];
-            if(y+1<n)
-                pq.push({mat[x][y+1],x,y+1});
+        int res=-1;
+        while(l<=h){
+            int m=(l+h)/2;
+            if(isElementlessthan(m,mat)>=k)
+            {
+                res=m;
+                h=m-1;
+            }
+            else
+                l=m+1;
         }
         
-        return ans;
+        return res;
         
     }
 };
