@@ -6,16 +6,20 @@ public:
         int res=0;
         
         for(auto x:s){
-            if(s.find(x-1)==s.end()){
-                int cnt=0;
-                while(s.find(x)!=s.end())
-                {
-                    cnt++;
-                    x++;
-                    
+            int cur=1;
+            for(int i=1;s.count(x-i);i++)
+            {
+                s.erase(x-i);
+                cur++;
                 }
-                res=max(res,cnt);
+            
+            for(int i=1;s.count(x+i);i++)
+            {
+               s.erase(x+i);
+                cur++; 
             }
+         
+            res=max(res,cur);
         }
         return res;
     }
