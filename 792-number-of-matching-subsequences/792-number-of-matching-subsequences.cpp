@@ -6,13 +6,13 @@ public:
             al[s[i]-'a'].push_back(i);
         
         int res=0;
+        
         for(auto &word:words){
             int x=-1;
             bool find=true;
-            for(auto c:word){
-                if(!find){
+            for(auto &c:word){
+                if(!find)
                     break;
-                }
                 auto it=upper_bound(al[c-'a'].begin(),al[c-'a'].end(),x);
                 if(it==al[c-'a'].end())
                     find=false;
