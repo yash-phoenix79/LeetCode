@@ -2,19 +2,23 @@ class Solution {
 public:
     bool isSubsequence(string s, string t) {
         
-        int i=0,j=0;
+        int n=s.length(),m=t.length();
         
-        while(i<s.length()&&j<t.length()){
-            while(j<t.length()&&s[i]!=t[j])
-                j++;
-            if(s[i]==t[j]){
-                 i++;
-            j++;
+        vector<vector<int>>dp(m+1,vector<int>(n+1));
+        
+        for(int i=0;i<=m;i++)dp[i][0]=0;
+        for(int i=0;i<=n;i++)dp[0][i]=0;
+        
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=n;j++){
+                if(t[i-1]==s[j-1])dp[i][j]=1+dp[i-1][j-1];
+                else dp[i][j]=dp[i-1][j];
+                    
             }
-           
         }
         
-        return i==s.length()?true:false;
+        cout<<dp[m][n];
         
+        return dp[m][n]==n;
     }
 };
