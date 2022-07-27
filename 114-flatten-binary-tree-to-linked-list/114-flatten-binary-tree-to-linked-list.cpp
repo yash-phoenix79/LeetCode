@@ -12,31 +12,26 @@
 class Solution {
 public:
     
-     TreeNode* dum=new TreeNode(-1);
-    TreeNode* temp;
-    
-    void preorder(TreeNode* root){
+    void help(TreeNode* root){
         if(!root)
             return;
-        temp->right=new TreeNode(root->val);
-        temp=temp->right;
-        preorder(root->left);
-        preorder(root->right);
+        
+        TreeNode* temp=root;
+        temp=temp->left;
+        if(temp){
+             while(temp->right){
+            temp=temp->right;}
+                  temp->right=root->right;
+        root->right=root->left;
+        }
+        
+       
+       root->left=NULL;
+        help(root->right);
+        
     }
     
     void flatten(TreeNode* root) {
-        
-        if(!root)
-            return;
-        
-       temp=dum;
-        
-        preorder(root);
-        
-        root->right=dum->right;
-        root->left=NULL;
-     root->right=root->right->right;
-;
-        
+        help(root);
     }
 };
