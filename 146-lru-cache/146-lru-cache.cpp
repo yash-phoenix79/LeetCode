@@ -2,24 +2,21 @@ class LRUCache {
 public:
     
     class Node{
-        public:
-            int key;
-            int val;
-            Node* next;
-            Node* prev;
-            Node(int key,int val){
-                this->key=key;
-                this->val=val;
-            
+      public:
+        int key;
+        int val;
+        Node* next;
+        Node* prev;
+        Node(int key,int val){
+            this->key=key;
+            this->val=val;
         }
     };
     
-    
+    int sizel;
     Node* head=new Node(-1,-1);
     Node* tail=new Node(-1,-1);
-    
     unordered_map<int,Node*>m;
-    int sizer;
     
     void removeNode(Node* curNode){
         Node* nextNode=curNode->next;
@@ -37,15 +34,14 @@ public:
     }
     
     LRUCache(int capacity) {
-        
-        this->sizer=capacity;
+        this->sizel=capacity;
         head->next=tail;
         tail->prev=head;
-        
     }
     
     int get(int key) {
         if(m.find(key)==m.end())return -1;
+            
         
         Node* curNode=m[key];
         int res=curNode->val;
@@ -62,9 +58,10 @@ public:
             Node* curNode=m[key];
             m.erase(key);
             removeNode(curNode);
+            
         }
         
-        if(m.size()==sizer){
+        if(m.size()==sizel){
             m.erase(tail->prev->key);
             removeNode(tail->prev);
         }
