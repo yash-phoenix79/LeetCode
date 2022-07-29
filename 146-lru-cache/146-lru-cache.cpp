@@ -40,7 +40,8 @@ public:
     }
     
     int get(int key) {
-        if(m.find(key)==m.end())return -1;
+        if(m.find(key)==m.end())
+            return -1;
             
         
         Node* curNode=m[key];
