@@ -22,7 +22,7 @@ public:
             for(int i=0;i<sz;i++){
                 auto cur=q.front();
                 q.pop();
-                cout<<cur.first<<" "<<cur.second<<endl;
+                // cout<<cur.first<<" "<<cur.second<<endl;
                 int x=cur.first;
                 int y=cur.second;
                 
@@ -39,7 +39,7 @@ public:
                     
                 }
             }
-            cout<<endl;
+            // cout<<endl;
             t++;
         }
         return res;
