@@ -1,63 +1,39 @@
 class Solution {
 public:
     
-    bool check(string s, unordered_map<char,int>m){
+    vector<int> cntr(string s){
         int n=s.length();
-        
-        for(int i=0;i<n;i++){
-          
-           if(m[s[i]]==1)
-                m.erase(s[i]);
-            else if(m[s[i]]>1)
-                m[s[i]]--;
-        }
-        
-//           for(auto pair:m){
-//             cout<<pair.first<<" "<<pair.second<<endl;
-//         }
-        
-//         cout<<endl;
-//          cout<<endl;
-        
-       bool res=true;
-        for(auto x:m){
-            if(x.second>0){
-                res=false;
-                break;
-            }
-        }
-        return res;
+         vector<int>cnt(26,0);
+        for(int i=0;i<n;i++)
+            cnt[s[i]-'a']++;
+     return cnt;       
     }
     
     vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
-       vector<string> res;
-        int m=words1.size(),n=words2.size();
+       
+         vector<string>res;
+        vector<int>cnt(26,0),tmp(26,0);
         
-        unordered_map<char,int>mp;
-        for(int i=0;i<words2[0].length();i++)
-            mp[words2[0][i]]++;
-        
-        for(int i=1;i<n;i++){
-            vector<int>al(26,0);
-            for(int j=0;j<words2[i].length();j++)
-                al[words2[i][j]-'a']++;
-            for(int i=0;i<26;i++){
-                
-                if(mp['a'+i]<al[i])
-                   mp['a'+i]=al[i];
-            }
+        for(int i=0;i<words2.size();i++){
+            tmp=cntr(words2[i]);
+             for(int j=0;j<26;j++){
+                   if(tmp[j]>cnt[j])
+                    cnt[j]=tmp[j];
+             }
+              
         }
         
-//         for(auto pair:mp){
-//             cout<<pair.first<<" "<<pair.second<<endl;
-//         }
-        
-        for(int i=0;i<m;i++){
-            if(check(words1[i],mp))
+        for(int i=0;i<words1.size();i++){
+            tmp=cntr(words1[i]);
+            int j=0;
+            for(j=0;j<26;j++){
+                if(tmp[j]<cnt[j])
+                break; 
+            }
+           
+            if(j==26)
                 res.push_back(words1[i]);
         }
-        
         return res;
-        
     }
 };
