@@ -1,32 +1,27 @@
 class Solution {
 public:
     
-    int isElementlessthan(int cur,vector<vector<int>>& mat)
-    {
-        int n=mat.size();
-        int x=0,y=n-1;
-        
+    int check(vector<vector<int>>& matrix,int m){
         int cnt=0;
-         for(x=0;x<n;x++){
-             while(y>=0&&mat[x][y]>cur)y--;
-             cnt+=(y+1);
-         }
-        
+        int n=matrix.size();
+        int x=0,y=n-1;
+        for(x=0;x<n;x++){
+            while(y>=0&&matrix[x][y]>m)y--;
+            cnt+=(y+1);
+        }
         return cnt;
     }
     
-    int kthSmallest(vector<vector<int>>& mat, int k) {
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int n=matrix.size();
+        int l=matrix[0][0],r=matrix[n-1][n-1];
         
-        int n=mat.size();
-        int l=mat[0][0],h=mat[n-1][n-1];
-        
-        int res=-1;
-        while(l<=h){
-            int m=(l+h)/2;
-            if(isElementlessthan(m,mat)>=k)
-            {
+        int m,res=-1;
+        while(l<=r){
+            m=(l+r)/2;
+            if(check(matrix,m)>=k){
                 res=m;
-                h=m-1;
+                r=m-1;
             }
             else
                 l=m+1;
