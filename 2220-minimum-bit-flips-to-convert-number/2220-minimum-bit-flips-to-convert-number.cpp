@@ -3,14 +3,10 @@ public:
     int minBitFlips(int start, int goal) {
         
         int res=0;
-        int t=max(start,goal);
-        int cnt=0;
-        while(t>0){
-        cnt++;
-            t/=2;
-        }
+       
+      
         // cout<<cnt<<endl;
-        while(cnt--)
+        while(start!=0||goal!=0)
         {
             int t1=start&1;
             int t2=goal&1;
