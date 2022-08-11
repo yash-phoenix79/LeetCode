@@ -12,28 +12,29 @@
 class Solution {
 public:
     
-    void inorder(TreeNode* root,unordered_map<int,int>&m){
+    vector<int>res;
+    int curFreq=0,maxFreq=0,preCursor=INT_MIN;
+    
+    void inorder(TreeNode* root){
         if(!root)return;
-        inorder(root->left,m);
-        m[root->val]++;
-        inorder(root->right,m);
+        inorder(root->left);
+        if(preCursor==root->val)curFreq++;
+        else
+            curFreq=1;
+        if(curFreq>maxFreq){
+            res.clear();
+            maxFreq=curFreq;
+            res.push_back(root->val);
+        }
+        else if(curFreq==maxFreq){
+            res.push_back(root->val);
+        }
+        preCursor=root->val;
+        inorder(root->right);
     }
     
     vector<int> findMode(TreeNode* root) {
-        unordered_map<int,int>m;
-        
-        inorder(root,m);
-        
-        int t=0;
-        
-        for(auto x:m)
-            t=max(t,x.second);
-        
-        vector<int>res;
-        for(auto x:m){
-            if(x.second==t)
-                res.push_back(x.first);
-        }
+        inorder(root);
         return res;
     }
 };
