@@ -4,11 +4,11 @@ public:
     string findDecode(string s,int &i){
         string res="";
         while(i<s.length()&&s[i]!=']'){
-            if(!isdigit(s[i]))
+            if(isalpha(s[i]))
                 res+=s[i++];
             else{
                 int n=0;
-                while(i<s.length()&&isdigit(s[i]))
+                while(i<s.length()&&!isalpha(s[i])&&s[i]!='[')
                     n=n*10+s[i++]-'0';
                 i++;
                 string temp=findDecode(s,i);
