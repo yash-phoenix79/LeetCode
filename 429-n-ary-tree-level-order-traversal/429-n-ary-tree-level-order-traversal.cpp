@@ -27,10 +27,10 @@ public:
         
         queue<Node*>q;
         q.push(root);
-        
+         vector<int>temp;
         while(!q.empty()){
         int n=q.size();
-            vector<int>temp;
+           
             while(n--){
                 auto cur=q.front();
                 q.pop();
@@ -39,6 +39,7 @@ public:
                     q.push(x);
             }
             ans.push_back(temp);
+            temp.clear();
         }
         return ans;
     }
