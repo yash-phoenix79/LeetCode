@@ -2,8 +2,8 @@ class Solution {
 public:
     int jump(vector<int>& nums) {
         int n=nums.size();
-        int i=0,maxReachable=0,lastReached=0,step=0;
-        
+        int lastReached=0,maxReachable=0;
+        int step=0,i=0;
         while(lastReached<n-1){
             maxReachable=max(maxReachable,i+nums[i]);
             if(i==lastReached){
@@ -12,8 +12,6 @@ public:
             }
             i++;
         }
-        
         return step;
-        
     }
 };
