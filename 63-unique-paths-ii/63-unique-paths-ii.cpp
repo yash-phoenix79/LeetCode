@@ -1,34 +1,34 @@
 class Solution {
 public:
     
-    int find(int i,int j,vector<vector<int>>& obs,vector<vector<int>>&dp){
+    int find(int x,int y,vector<vector<int>>&dp,vector<vector<int>>& obs){
         int n=obs.size();
         int m=obs[0].size();
         
-         if(i>=n||j>=m)
+        if(x>=n||y>=m)
             return 0;
+        if(obs[x][y])
+            return dp[x][y]=0;
         
-        if(obs[i][j])
-            return dp[i][j]=0;
-       
-        
-                if(i==n-1&&j==m-1)
+        if(x==n-1&&y==m-1)
             return 1;
+        if(dp[x][y]!=-1)
+            return dp[x][y];
         
-        if(dp[i][j]!=-1)
-            return dp[i][j];
-
-        return dp[i][j]=find(i+1,j,obs,dp)+find(i,j+1,obs,dp);
+        return dp[x][y]=find(x+1,y,dp,obs)+find(x,y+1,dp,obs);
+        
     }
     
+    
     int uniquePathsWithObstacles(vector<vector<int>>& obs) {
-        int n=obs.size();
+     int n=obs.size();
         int m=obs[0].size();
         
-        if(obs[n-1][m-1]||obs[0][0])return 0;
+        if(obs[0][0]||obs[n-1][m-1])return 0;
         
         vector<vector<int>>dp(n,vector<int>(m,-1));
-        return find(0,0,obs,dp);
+        
+        return find(0,0,dp,obs);
         
     }
 };
