@@ -11,18 +11,30 @@
  */
 class Solution {
 public:
-        vector<int>res;
-    
-    void findInorder(TreeNode* root){
-        if(!root)
-            return;
-        findInorder(root->left);
-        res.push_back(root->val);
-        findInorder(root->right);
-    }
-    
     vector<int> inorderTraversal(TreeNode* root) {
-        findInorder(root);
+        vector<int>res;
+        TreeNode* cur=root;
+        while(cur){
+            if(!cur->left){
+                res.push_back(cur->val);
+                cur=cur->right;
+            }
+            else{
+                TreeNode* t=cur->left;
+                while(t->right&&t->right!=cur)
+                    t=t->right;
+                if(!t->right)
+                {
+                    t->right=cur;
+                    cur=cur->left;
+                }
+                else{
+                    t->right=NULL;
+                    res.push_back(cur->val);
+                    cur=cur->right;
+                }
+            }
+        }
         return res;
     }
 };
