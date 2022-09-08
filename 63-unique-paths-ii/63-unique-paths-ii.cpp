@@ -15,7 +15,7 @@ public:
                 if(i==n-1&&j==m-1)
             return 1;
         
-        if(dp[i][j])
+        if(dp[i][j]!=-1)
             return dp[i][j];
 
         return dp[i][j]=find(i+1,j,obs,dp)+find(i,j+1,obs,dp);
@@ -27,7 +27,7 @@ public:
         
         if(obs[n-1][m-1]||obs[0][0])return 0;
         
-        vector<vector<int>>dp(n,vector<int>(m));
+        vector<vector<int>>dp(n,vector<int>(m,-1));
         return find(0,0,obs,dp);
         
     }
