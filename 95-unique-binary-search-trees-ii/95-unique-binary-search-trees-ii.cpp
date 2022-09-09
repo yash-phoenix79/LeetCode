@@ -12,19 +12,20 @@
 class Solution {
 public:
     
-    vector<TreeNode*>recur(int l,int r){
+    vector<TreeNode*> rec(int l,int r){
         if(l>r)
             return {NULL};
         vector<TreeNode*>res;
-        for(int root=l;root<=r;root++){
-            vector<TreeNode*>left=recur(l,root-1);
-            vector<TreeNode*>right=recur(root+1,r);
+        for(int i=l;i<=r;i++){
+            vector<TreeNode*>left=rec(l,i-1);
+            vector<TreeNode*>right=rec(i+1,r);
+            
             for(auto x:left){
                 for(auto y:right){
-                    TreeNode* r=new TreeNode(root);
-                    r->left=x;
-                    r->right=y;
-                    res.push_back(r);
+                    TreeNode*root=new TreeNode(i);
+                    root->left=x;
+                    root->right=y;
+                    res.push_back(root);
                 }
             }
         }
@@ -32,8 +33,6 @@ public:
     }
     
     vector<TreeNode*> generateTrees(int n) {
-        
-       return recur(1,n); 
-        
+        return rec(1,n);
     }
 };
