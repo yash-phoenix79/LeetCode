@@ -1,36 +1,30 @@
 class Solution {
 public:
-    
-  vector<int> recur(string s,int l,int r){
-      if(l>r)
-          return {1};
-      if(l==r)
-          return {s[l]-'0'};
-      vector<int>res;
-      for(int i=l;i<=r;i++){
-          if(s[i]=='+'||s[i]=='-'||s[i]=='*'){
-              vector<int>a=recur(s,l,i-1);
-              vector<int>b=recur(s,i+1,r);
-              for(auto x:a){
-                  for(auto y:b){
-                      if(s[i]=='+')
-                          res.push_back(x+y);
-                      else if(s[i]=='-')
-                          res.push_back(x-y);
-                      else
-                          res.push_back(x*y);
-                  }
-              }
-              
-          }
-      }
-      if(res.empty())
-                  return {stoi(s.substr(l,r-l+1))};
-      return res;
-  }
-    
-    vector<int> diffWaysToCompute(string expression) {
-     int n=expression.length();
-        return recur(expression,0,n-1);
+    vector<int> diffWaysToCompute(string exp) {
+        vector<int>ans;
+        int n=exp.length();
+        int check=1;
+        
+        for(int i=0;i<n;i++){
+            if(!isdigit(exp[i])){
+                check=0;
+                vector<int>l= diffWaysToCompute(exp.substr(0,i));
+                vector<int>r= diffWaysToCompute(exp.substr(i+1));
+                for(auto x:l){
+                    for(auto y:r){
+                        if(exp[i]=='+')
+                            ans.push_back(x+y);
+                        else if(exp[i]=='-')
+                            ans.push_back(x-y);
+                        else
+                            ans.push_back(x*y);
+                    }
+                }
+                
+            }
+        }
+        if(check)
+            return{stoi(exp)};
+        return ans;
     }
 };
