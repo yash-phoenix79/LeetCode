@@ -11,34 +11,30 @@
  */
 class Solution {
 public:
+    
     int res=0;
     
-    void find(TreeNode* root,vector<int>arr){
+    void find(TreeNode* root,int cnt){
+        // if(!root)
+        //     return;
+        cnt^=(1<<root->val);
+        if(root->left)find(root->left,cnt);
+        if(root->right)find(root->right,cnt);
         
-        arr[root->val]++;
-        if(root->left)find(root->left,arr);
-        if(root->right)find(root->right,arr);
-        
-        if(!root->left&&!root->right){
-            int cnt=0;
-            for(int i=1;i<=9;i++){
-                if(arr[i]%2)
-                    if(++cnt>1)
-                        break;
-            }
-            if(cnt<=1)
-                res++;
-        }
+        if(!root->left&&!root->right)
+            if(__builtin_popcount(cnt)<=1)res++;
         
     }
     
     int pseudoPalindromicPaths (TreeNode* root) {
+        
         if(!root)
             return res;
-      
-        vector<int>arr(10,0);
         
-        find(root,arr);
+        if(!root->left&&!root->right)
+        return 1;
+        int cnt=0;
+        find(root,cnt);
         return res;
     }
 };
