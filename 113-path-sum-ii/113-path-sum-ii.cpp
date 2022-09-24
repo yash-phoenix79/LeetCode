@@ -13,22 +13,22 @@ class Solution {
 public:
     vector<vector<int>>res;
     
-    void find(TreeNode* root,int tar,int sum,vector<int>path){
+    void find(TreeNode* root,int sum,vector<int>&path){
         if(!root)
             return;
+        sum-=root->val;
         path.push_back(root->val);
-        sum+=root->val;
-        if(tar==sum&&!root->left&&!root->right)
+        if(sum==0&&!root->left&&!root->right)
             res.push_back(path);
-        find(root->left,tar,sum,path);
-        find(root->right,tar,sum,path);
+        find(root->left,sum,path);
+        find(root->right,sum,path);
+        sum+=root->val;
+        path.pop_back();
     }
     
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         vector<int>path;
-        int sum=0;
-        find(root,targetSum,sum,path);
+        find(root,targetSum,path);
         return res;
-        
     }
 };
