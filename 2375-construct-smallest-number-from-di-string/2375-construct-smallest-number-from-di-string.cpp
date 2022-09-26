@@ -1,29 +1,31 @@
 class Solution {
 public:
-    string smallestNumber(string pattern) {
-        int n=pattern.length();
+    string smallestNumber(string pat) {
+        string res="";
+        int n=pat.length();
         stack<char>s;
         s.push('1');
         
-        string temp="";
+        int cnt=2;
         
-        char cnt='2';
         for(int i=0;i<n;i++){
-           if(pattern[i]=='I'){
+
+            if(pat[i]=='I'){
                 while(!s.empty()){
-                    temp+=s.top();
+                    res+=s.top();
                     s.pop();
                 }
-                   
             }
-            s.push(cnt);
-            cnt++;
-        }
-        while(!s.empty()){
-            temp+=s.top();
-                    s.pop();
+           s.push('0'+cnt++);
+            
         }
         
-        return temp;
+        while(!s.empty()){
+                    res+=s.top();
+                    s.pop();
+                }
+        
+        return res;
+        
     }
 };
