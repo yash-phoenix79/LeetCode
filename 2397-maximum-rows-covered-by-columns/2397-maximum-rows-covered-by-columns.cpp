@@ -3,38 +3,56 @@ public:
     
     int res=0;
     
-    void find(vector<vector<int>>& mat, int col,int n,int m,int idx,vector<int>&vis){
-        if(col==0||idx>=m){
-            int cnt=0;
-            for(int i=0;i<n;i++){
-                bool check=true;
-                for(int j=0;j<m;j++){
-                    if(mat[i][j]&&!vis[j]){
-                        check=false;
-                        break;
-                    }
+    void check(vector<vector<int>>& mat,vector<int>&vis,int n,int m){
+        
+        int cnt=0;
+        
+        for(int i=0;i<n;i++){
+            bool flag=true;
+            for(int j=0;j<m;j++){
+                if(mat[i][j]&&!vis[j]){
+                    flag=false;
+                    break;
                 }
-                if(check)
-                    cnt++;
             }
-            res=max(res,cnt);
-            return;
+            if(flag)cnt++;
         }
         
-        vis[idx]=1;
-        find(mat,col-1,n,m,idx+1,vis);
-        vis[idx]=0;
+        res=max(res,cnt);
         
-        find(mat,col,n,m,idx+1,vis);
-        return;
     }
     
-    int maximumRows(vector<vector<int>>& mat, int col) {
+    void find(int i,vector<vector<int>>& mat, int num,int n,int m,vector<int>&vis){
+        
+           if(num==0)
+    {
+        check(mat,vis,n,m);
+        return;
+    }
+       
+        if(i==m)
+            return;
+        
+      
+        
+        find(i+1,mat,num,n,m,vis);
+        
+        vis[i]=1;
+        find(i+1,mat,num-1,n,m,vis);
+        vis[i]=0;
+        
+        
+    }
+    
+    int maximumRows(vector<vector<int>>& mat, int num) {
+        
         int n=mat.size();
         int m=mat[0].size();
+        
         vector<int>vis(m,0);
         
-        find(mat,col,n,m,0,vis);
+        find(0,mat,num,n,m,vis);
+        
         return res;
     }
 };
