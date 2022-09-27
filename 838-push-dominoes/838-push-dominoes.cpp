@@ -4,21 +4,23 @@ public:
         int n=dom.length();
         string res(n,'.');
         
-        queue<int>q;
+        vector<int>q;
         
         for(int i=0;i<n;i++){
             if(dom[i]!='.'){
                 res[i]=dom[i];
-                q.push(i);
+                q.push_back(i);
             }
         }
         
         while(!q.empty()){
             int m=q.size();
             string temp=res;
+            vector<int>q1;
             while(m--){
-                int cur=q.front();
-                q.pop();
+                int cur=q.back();
+                // cout<<cur<<endl;
+                q.pop_back();
                 if(res[cur]=='R'){
                     if(cur+1==n||(cur+1<n&&res[cur+1]!='.'))
                         continue;
@@ -26,7 +28,7 @@ public:
                         continue;
                     else{
                    temp[cur+1]='R';
-                    q.push(cur+1); 
+                    q1.push_back(cur+1); 
                     }
 
                 }
@@ -37,12 +39,13 @@ public:
                         continue;
                     else{
                       temp[cur-1]='L';
-                    q.push(cur-1);  
+                    q1.push_back(cur-1);  
                     }
                     
                 }
             }
             res=temp;
+            q=q1;
         }
         
         return res;
