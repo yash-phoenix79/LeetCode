@@ -4,10 +4,12 @@ public:
         
         if(x<0)
             return false;
-        string s=to_string(x);
-        string t=s;
-        reverse(t.begin(),t.end());
-        return t==s;
-        
+        long long cnt=0;
+        int t=x;
+        while(t){
+            cnt=cnt*10+t%10;
+            t/=10;
+        }
+        return x==cnt;
     }
 };
