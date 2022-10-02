@@ -11,29 +11,22 @@
  */
 class Solution {
 public:
-    int mini=INT_MAX;
     
-    void minDep(TreeNode* root,int dep){
+    int find(TreeNode* root){
+      
         if(!root)
-            return ;
-        
-        if(!root->left&&!root->right){
-            mini=min(mini,dep);
-            return ;
-        }
-        
-       minDep(root->left,dep+1);
-       minDep(root->right,dep+1);
-        
-        
-        
+            return INT_MAX/2;
+          if(!root->left&&!root->right)
+            return 1;
+        return 1+min(find(root->left),find(root->right));
     }
     
     int minDepth(TreeNode* root) {
-       if(!root)
-           return 0;
+     
+        if(!root)
+            return 0;
         
-       minDep(root,1);
-        return mini;
+        return find(root);
+        
     }
 };
