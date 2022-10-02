@@ -12,17 +12,26 @@
 class Solution {
 public:
     
-    TreeNode* findBST(vector<int>&nums,int l,int h){
-        if(l>h)
+    TreeNode* find(vector<int>&nums,int l,int r){
+        if(l>r)
             return NULL;
-        int m=(l+h)/2;
+        
+        if(l==r)
+            return new TreeNode(nums[l]);
+        int m=(l+r)/2;
+        
         TreeNode* root=new TreeNode(nums[m]);
-        root->left=findBST(nums,l,m-1);
-        root->right=findBST(nums,m+1,h);
+        root->left=find(nums,l,m-1);
+        root->right=find(nums,m+1,r);
         return root;
     }
     
     TreeNode* sortedArrayToBST(vector<int>& nums) {
-        return findBST(nums,0,nums.size()-1);
+        
+        int n=nums.size();
+        int l=0,r=n-1;
+        
+        return find(nums,l,r);
+        
     }
 };
