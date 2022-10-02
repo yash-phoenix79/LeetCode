@@ -1,24 +1,28 @@
 class Solution {
 public:
     
-    int next(int n){
-        int sum=0;
+    int check(int n){
+        int res=0;
+        
         while(n){
-            sum+=(n%10)*(n%10);
-            n/=10;
+            res=res+((n%10)*(n%10));
+        n/=10; 
         }
-        return sum;
+       
+        return res;
     }
     
     bool isHappy(int n) {
         
-        int slow=next(n);
-        int fast=next(next(n));
+        int s=check(n);
+        int f=check(check(n));
         
-        while(slow!=fast){
-            slow=next(slow);
-            fast=next(next(fast));
+        while(s!=f&&s!=n){
+            s=check(s);
+            f=check(check(f));
         }
-        return slow==1;
+        
+        return s==1;
+        
     }
 };
