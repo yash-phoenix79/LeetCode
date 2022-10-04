@@ -2,13 +2,14 @@ class WordDictionary {
 public:
     
     class TrieNode{
-        public:
+        public:      
         bool check;
         TrieNode* children[26];
         TrieNode(){
             check=false;
             memset(children,NULL,sizeof(children));
         }
+        
     };
     
     TrieNode* root=new TrieNode();
@@ -22,40 +23,36 @@ public:
         int len=word.length();
         int k=0;
         TrieNode* cur=root;
-        
         for(int i=0;i<len;i++){
             k=word[i]-'a';
             if(!cur->children[k])
                 cur->children[k]=new TrieNode();
             cur=cur->children[k];
         }
-        
         cur->check=true;
     }
     
     bool search(string word) {
-        
-        return check(word.c_str(),root);
-        
+        return search(word.c_str(),root);
     }
     
-    bool check(const char*c,TrieNode* cur){
-        
-        for(int i=0;c[i]&&cur;i++){
+    bool search(const char*c,TrieNode* root)
+    {
+        for(int i=0;c[i]&&root;i++){
             if(c[i]!='.')
-                cur=cur->children[c[i]-'a'];
+                root=root->children[c[i]-'a'];
             else{
-                TrieNode*tmp=cur;
+                TrieNode* temp=root;
                 for(int j=0;j<26;j++){
-                    cur=tmp->children[j];
-                    if(check(c+i+1,cur))
+                  root=temp->children[j];
+                    if(search(c+i+1,root))
                         return true;
                 }
+             
             }
         }
-        return cur&&cur->check;
+        return root&&root->check;
     }
-    
 };
 
 /**
