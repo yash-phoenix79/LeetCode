@@ -11,20 +11,27 @@
  */
 class Solution {
 public:
+    
     vector<vector<int>>res;
     
-    void levelorder(TreeNode* root,int level){
+    void find(TreeNode* root,int k){
         if(!root)
             return;
-        if(res.size()==level)
-            res.push_back(vector<int>());
-        res[level].push_back(root->val);
-        levelorder(root->left,level+1);
-        levelorder(root->right,level+1);
+        if(res.size()<k){
+            res.push_back({});
+        }
+        res[k-1].push_back(root->val);
+        find(root->left,k+1);
+        find(root->right,k+1);
     }
     
     vector<vector<int>> levelOrder(TreeNode* root) {
-        levelorder(root,0);
+        
+        if(!root)
+            return res;
+        
+        int k=1;
+        find(root,k);
         return res;
     }
 };
