@@ -1,32 +1,32 @@
 class Trie {
 public:
     
-    class TreeNode{
-        public:
+    class TrieNode{
+      public:
         bool stringEnd;
-        TreeNode* children[26];
-        TreeNode(){
+        TrieNode* children[26];
+        TrieNode(){
             stringEnd=false;
             for(int i=0;i<26;i++)
                 children[i]=NULL;
         }
     };
-
-    TreeNode* root;
+    
+    TrieNode *root;
     
     Trie() {
-        root=new TreeNode();
+        root= new TrieNode();
     }
     
     void insert(string word) {
         
         int len=word.length();
         int k=0;
-        TreeNode* cur=root;
+        TrieNode* cur=root;
         for(int i=0;i<len;i++){
             k=word[i]-'a';
-            if(cur->children[k]==NULL)
-                cur->children[k]=new TreeNode();
+            if(!cur->children[k])
+                cur->children[k]=new TrieNode();
             cur=cur->children[k];
         }
         cur->stringEnd=true;
@@ -34,10 +34,10 @@ public:
     }
     
     bool search(string word) {
-        
+     
         int len=word.length();
         int k=0;
-        TreeNode* cur=root;
+        TrieNode* cur=root;
         for(int i=0;i<len;i++){
             k=word[i]-'a';
             if(!cur->children[k])
@@ -45,13 +45,14 @@ public:
             cur=cur->children[k];
         }
         return cur->stringEnd;
+        
     }
     
     bool startsWith(string prefix) {
         
         int len=prefix.length();
         int k=0;
-        TreeNode* cur=root;
+        TrieNode* cur=root;
         for(int i=0;i<len;i++){
             k=prefix[i]-'a';
             if(!cur->children[k])
@@ -59,7 +60,6 @@ public:
             cur=cur->children[k];
         }
         return true;
-        
     }
 };
 
