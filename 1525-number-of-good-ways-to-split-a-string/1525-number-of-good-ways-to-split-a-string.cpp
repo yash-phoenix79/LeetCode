@@ -1,22 +1,19 @@
 class Solution {
 public:
-    
-    unordered_map<char,int>m1,m2;
-    
     int numSplits(string s) {
-        int n=s.length();
         
-        for(auto x:s)
-            m1[x]++;
-        int res=0;
+        int n=s.length();
+        vector<int>m1(26,0),m2(26,0);
+        
+        int res=0,dr=0,dl=0;
+        for(auto x:s){
+            dr+= ++m1[x-'a']==1;
+        }
         
         for(int i=0;i<n-1;i++){
-            if(m1[s[i]]==1)
-                m1.erase(s[i]);
-            else
-                m1[s[i]]--;
-            m2[s[i]]++;
-            if(m1.size()==m2.size())res++;
+            dl+= ++m2[s[i]-'a']==1;
+            dr-= --m1[s[i]-'a']==0;
+            res+=dl==dr;
         }
         return res;
     }
