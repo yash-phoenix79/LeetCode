@@ -2,42 +2,25 @@ class Solution {
 public:
     int maximalSquare(vector<vector<char>>& mat) {
         
+        if(mat.empty())
+            return 0;
+     
         int n=mat.size(),m=mat[0].size();
         
-        vector<vector<int>>t(n,vector<int>(m));
+        vector<int>pre(m),cur(m);
+        int res=0;
         
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
-                if(mat[i][j]=='1')
-                    t[i][j]=1;
-                else
-                    t[i][j]=0;
-            }
-        }
-        
-        int res=0;
-        for(int i=0;i<n;i++){
-            if(t[i][0]){
-                res=1;
-                break;
-            }
-        }
-        
-        for(int i=0;i<m;i++){
-            if(t[0][i]){
-                res=1;
-                break;
-            }
-        }
-        
-        for(int i=1;i<n;i++){
-            for(int j=1;j<m;j++){
-                if(t[i][j]==0)continue;
+                if(!i||!j||mat[i][j]=='0')
+                    cur[j]=mat[i][j]-'0';
                 else{
-                    t[i][j]=1+min({t[i-1][j-1],t[i-1][j],t[i][j-1]});
-                    res=max(res,t[i][j]);
+                    cur[j]=1+min({pre[j],pre[j-1],cur[j-1]});
                 }
+                res=max(res,cur[j]);
             }
+            fill(pre.begin(),pre.end(),0);
+            swap(pre,cur);
         }
         return res*res;
     }
