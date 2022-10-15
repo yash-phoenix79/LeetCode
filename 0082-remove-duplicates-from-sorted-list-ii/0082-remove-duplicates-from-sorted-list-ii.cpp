@@ -10,34 +10,24 @@
  */
 class Solution {
 public:
+    
+    ListNode* dum=new ListNode(0);
+    ListNode* prev=dum;
+    
     ListNode* deleteDuplicates(ListNode* head) {
-        if(!head||!head->next)
-            return head;
-        
-        vector<int>res;
-        unordered_map<int,int>m;
+        dum->next=head;
         while(head){
-            m[head->val]++;
+            
+            if(head->next&&head->next->val==head->val){
+                while(head->next&&head->next->val==head->val)
+                head=head->next;
+                prev->next=head->next;
+            }
+            else
+                prev=prev->next;
+            
             head=head->next;
         }
-        
-        for(auto x:m)
-        {
-            if(x.second==1)
-                res.push_back(x.first);
-            // cout<<x.first<<" ";
-        }
-        
-        sort(res.begin(),res.end());
-        
-        
-        
-        int i=0;
-        ListNode* dum=new ListNode(-1),*ans=dum;
-        while(i<res.size()){
-            dum->next=new ListNode(res[i++]);
-            dum=dum->next;
-        }
-        return ans->next;
+        return dum->next;
     }
 };
