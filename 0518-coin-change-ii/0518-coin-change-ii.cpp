@@ -30,7 +30,7 @@ public:
         
         int n=coins.size();
         dp=vector<vector<int>>(amount+1,vector<int>(n+1,-1));
-        sort(coins.begin(),coins.end());
+        // sort(coins.begin(),coins.end());
         return find(0,amount,coins);
         
     }
