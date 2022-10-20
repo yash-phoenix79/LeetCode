@@ -3,14 +3,13 @@ public:
     
     set<int>s;
     int t=0;
+    
     LUPrefix(int n) {
         
     }
     
     void upload(int video) {
-        
-        s.emplace(video);
-        
+        s.insert(video);
     }
     
     int longest() {
