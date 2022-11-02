@@ -11,7 +11,6 @@
  */
 class Solution {
 public:
-    
     int res=0;
     
     void find(TreeNode* root,int dep,int par,int gra){
