@@ -1,6 +1,6 @@
 class Solution {
 public:
-    vector<int> findBall(vector<vector<int>>& grid) {
+     vector<int> findBall(vector<vector<int>>& grid) {
      
         vector<int>res;
         int n=grid.size();
