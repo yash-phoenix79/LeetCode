@@ -1,7 +1,6 @@
 class Solution {
 public:
-    
-    char c[4]={'A','C','G','T'};
+      char c[4]={'A','C','G','T'};
     
     int minMutation(string st, string e, vector<string>& bank) {
         
