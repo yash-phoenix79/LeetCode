@@ -2,13 +2,11 @@ class Solution {
 public:
     
     struct trie{
-      
-        trie* next[2];
+      trie* next[2];
         trie(){
             next[0]=NULL;
             next[1]=NULL;
         }
-        
     };
     
     class TrieNode{
@@ -16,8 +14,8 @@ public:
         trie* root;
         public:
         TrieNode(){
-            root=new trie();
-        }
+          root=new trie();   
+        };
         void insert(int num){
             trie* cur=root;
             for(int i=31;i>=0;i--){
@@ -26,12 +24,11 @@ public:
                     cur->next[mas]=new trie();
                 cur=cur->next[mas];
             }
-            
         }
         
-        int maxXor(int num){
+        int maxXoR(int num){
             int val=0;
-            trie* cur=root;
+            trie*cur=root;
             for(int i=31;i>=0;i--){
                 int mas=(num>>i)&1;
                 if(cur->next[!mas]){
@@ -40,12 +37,10 @@ public:
                 }
                 else
                     cur=cur->next[mas];
-                    
             }
-            return val;
+             return val;
         }
-        
-        
+       
         
     };
     
@@ -53,11 +48,16 @@ public:
         
         int n=nums.size();
         int res=0;
+        
         TrieNode* t=new TrieNode();
+        
         for(int i=0;i<n;i++){
             t->insert(nums[i]);
-            res=max(res,t->maxXor(nums[i]));
+            res=max(res,t->maxXoR(nums[i]));
+            
         }
+        
         return res;
+        
     }
 };
