@@ -6,45 +6,36 @@ public:
     int sumSubarrayMins(vector<int>& arr) {
         
         int n=arr.size();
+        vector<int>l(n,-1),r(n,n);
         
-        vector<int>arr1(n),arr2(n);
-        
-        stack<pair<int,int>>s;
-        
-        s.push({INT_MIN,-1});
+        stack<int>s;
         
         for(int i=0;i<n;i++){
-            int cnt=1;
             
-            while(!s.empty()&&arr[i]<=s.top().first){
-                cnt+=s.top().second;
-                s.pop();
-            }
-            
-            s.push({arr[i],cnt});
-            arr1[i]=cnt;
-            
+            while(s.size()&&arr[i]<arr[s.top()])s.pop();
+            if(s.size())l[i]=i-s.top();
+            else l[i]=i+1;
+            s.push(i);
         }
         
-      
-        s.push({INT_MIN,n});
+        while(s.size())s.pop();
         
         for(int i=n-1;i>=0;i--){
-            int cnt=1;
-            while(!s.empty()&&arr[i]<s.top().first){
-                cnt+=s.top().second;
-                s.pop();
-            }
-            s.push({arr[i],cnt});
-            arr2[i]=cnt;
+            while(s.size()&&arr[i]<=arr[s.top()])s.pop();
+            if(s.size())r[i]=s.top()-i;
+            else r[i]=n-i;
+            s.push(i);
         }
         
         long long res=0;
+        
         for(int i=0;i<n;i++){
-            res=(res+(long long)((long long)(arr[i]%N)*(long long)(arr1[i]%N)*(long long)(arr2[i]%N))%N)%N;
+            long long prod=(l[i]*r[i])%N;
+            prod=(prod*arr[i])%N;
+            res=(res+prod)%N;
         }
         
-        return res;
+        return res%N;
         
     }
 };
