@@ -1,6 +1,7 @@
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
+        
         int i=0,cur=1;
         int n=nums.size();
         
@@ -12,7 +13,9 @@ public:
             else if(cur<n)
                 nums[++i]=nums[cur++];
         }
+        
         nums.resize(i+1);
         return i+1;
+        
     }
 };
