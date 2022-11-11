@@ -1,58 +1,50 @@
 class Solution {
 public:
     
-    class trie{
-        public:
-        trie* next[2];
+    struct trie{
+        trie*next[2];
         trie(){
-            next[0]=NULL;
-            next[1]=NULL;
+            next[0]=next[1]=NULL;
         }
     };
     
-    class TrieNode{
-        private:
-        trie* root;
-        public:
-        TrieNode(){
-            root=new trie();
-        }
-        void insert(int num){
-            trie* cur=root;
-            for(int i=31;i>=0;i--){
-                int mas=(num>>i)&1;
-                if(!cur->next[mas])
-                    cur->next[mas]=new trie();
-                cur=cur->next[mas];
+   trie* root=new trie();
+    
+    int res=0;
+    
+    int find(trie*cur,int num){
+        int sum=0;
+        for(int i=31;i>=0;i--){
+            int val=(num>>i)&1;
+            if(cur->next[!val]){
+                sum+=(1<<i);
+                cur=cur->next[!val];
             }
+            else
+                cur=cur->next[val];
         }
-        
-        int maxXor(int num){
-            int val=0;
-            trie* cur=root;
-            for(int i=31;i>=0;i--){
-                int mas=(num>>i)&1;
-                if(cur->next[!mas]){
-                    val+=(1<<i);
-                    cur=cur->next[!mas];
-                }
-                else
-                    cur=cur->next[mas];
-            }
-            return val;
+        return sum;
+    }
+    
+    void insert(trie* cur,int num){
+        for(int i=31;i>=0;i--){
+            int val=(num>>i)&1;
+            if(!cur->next[val])
+                cur->next[val]=new trie();
+            cur=cur->next[val];
         }
-        
-    };
+    }
+    
+    
     
     int findMaximumXOR(vector<int>& nums) {
-     
+        
         int n=nums.size();
-        int res=0;
-        TrieNode* t=new TrieNode();
         
         for(int i=0;i<n;i++){
-            t->insert(nums[i]);
-            res=max(res,t->maxXor(nums[i]));
+            trie* cur=root;
+            insert(cur,nums[i]);
+            res=max(res,find(cur,nums[i]));
         }
         
         return res;
