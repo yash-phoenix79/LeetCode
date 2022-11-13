@@ -1,21 +1,21 @@
 class Solution {
 public:
     
-    bool dfs(int v,vector<vector<int>>&adj,vector<int>&vis,unordered_map<int,int>&path,int time){
+    bool dfs(int v,int t,vector<vector<int>>&adj,vector<int>&vis,unordered_map<int,int>&m){
         
-        path[v]=time;
         vis[v]=1;
+        m[v]=t;
         
         if(v==0)
             return true;
         
         for(auto x:adj[v]){
             if(!vis[x])
-                if(dfs(x,adj,vis,path,time+1))
+                if(dfs(x,t+1,adj,vis,m))
                     return true;
         }
         
-        path.erase(v);
+        m.erase(v);
         return false;
         
     }
@@ -24,23 +24,22 @@ public:
         
         int n=a.size();
         vector<vector<int>>adj(n);
-       for(auto x:e){
-           adj[x[0]].push_back(x[1]);
-           adj[x[1]].push_back(x[0]);
-       }
-           
-           
+        for(auto x:e){
+            adj[x[0]].push_back(x[1]);
+            adj[x[1]].push_back(x[0]);
+        }
+        
         vector<int>vis(n,0);
         unordered_map<int,int>m;
         
-        dfs(b,adj,vis,m,0);
-        
-        int ans=INT_MIN;
+        dfs(b,0,adj,vis,m);
         
         queue<vector<int>>q;
         q.push({0,0,0});
         
         vis.assign(n,0);
+        
+        int res=INT_MIN;
         
         while(!q.empty()){
             auto cur=q.front();
@@ -58,15 +57,15 @@ public:
             }
             
             if(adj[v].size()==1&&v!=0)
-                ans=max(ans,am);
+            res=max(res,am);
             
             for(auto x:adj[v]){
                 if(!vis[x])
                     q.push({x,am,t+1});
-                    
             }
             
         }
-        return ans;
+        return res;
+        
     }
 };
