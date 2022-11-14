@@ -1,26 +1,26 @@
 class Solution {
 public:
     
-    vector<int>mem;
+    vector<int>par;
     
-    int getParent(int i){
-        if(i!=mem[i])
-            mem[i]=getParent(mem[i]);
-        return mem[i];
+    int getPar(int i){
+        if(par[i]!=i)
+            par[i]=getPar(par[i]);
+        return par[i];
     }
     
     void connect(int i,int j){
-         mem[getParent(i)]=mem[getParent(j)];
+         par[getPar(i)]=par[getPar(j)];
     }
        
     
     int removeStones(vector<vector<int>>& stones) {
         
         int n=stones.size();
-        mem=vector<int>(n);
+        par=vector<int>(n);
         
         for(int i=0;i<n;i++)
-            mem[i]=i;
+            par[i]=i;
         
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
@@ -32,7 +32,7 @@ public:
         int cnt=0;
         
         for(int i=0;i<n;i++)
-            if(mem[i]==i)cnt++;
+            if(par[i]==i)cnt++;
         return n-cnt;
         
     }
