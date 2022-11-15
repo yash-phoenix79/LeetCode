@@ -16,18 +16,18 @@ public:
         if(!root)
             return 0;
         
-        TreeNode*l=root,*r=root;
-        
         int hl=0,hr=0;
         
+        TreeNode*l=root,*r=root;
+        
         while(l){
-            l=l->left;
             hl++;
+            l=l->left;
         }
         
         while(r){
-            r=r->right;
             hr++;
+            r=r->right;
         }
         
         if(hl==hr)return pow(2,hl)-1;
