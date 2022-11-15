@@ -4,7 +4,8 @@ public:
     vector<int>par;
     
     int getPar(int i){
-        if(i!=par[i])
+        
+        if(par[i]!=i)
             par[i]=getPar(par[i]);
         return par[i];
     }
@@ -17,34 +18,38 @@ public:
         
         int n=p.size();
         
-        vector<pair<int,pair<int,int>>>adj;
-        
         par=vector<int>(n);
         for(int i=0;i<n;i++)
             par[i]=i;
         
+        vector<pair<int,pair<int,int>>>adj;
+        
+     
         for(int i=0;i<n;i++){
             for(int j=i+1;j<n;j++){
                 int dis=abs(p[i][0]-p[j][0])+abs(p[i][1]-p[j][1]);
+                
                 adj.push_back({dis,{i,j}});
             }
         }
         
-        sort(begin(adj),end(adj));
+         sort(begin(adj),end(adj));
         
         int res=0;
         
         for(int i=0;i<adj.size();i++){
             
-            auto cur=adj[i];
-            int a=cur.second.first;
-            int b=cur.second.second;
+            auto t=adj[i];
+            int a=t.second.first;
+            int b=t.second.second;
             
-            if(getPar(a)!=getPar(b))
-            {
+            if(getPar(a)!=getPar(b)){
+                res+=t.first;
                 connect(a,b);
-                res+=cur.first;
+   
             }
+            // if(cnt==n)
+            //     break;
         }
         
         return res;
