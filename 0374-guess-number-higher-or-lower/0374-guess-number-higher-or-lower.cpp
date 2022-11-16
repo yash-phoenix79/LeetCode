@@ -11,12 +11,12 @@ class Solution {
 public:
     int guessNumber(int n) {
         
-       long long l=1,r=n;
+       int l=1,r=n;
         
         long long m,res;
         
         while(l<=r){
-            m=(l+r)/2;
+            m=((long long)l+r)/2;
             
             if(guess(m)==0){
                 res=m;
