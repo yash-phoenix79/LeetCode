@@ -32,7 +32,7 @@ public:
         
         for(int i=0;i<q.size();i++){
             int x=lower_bound(begin(arr),end(arr),q[i])-begin(arr);
-            int y=upper_bound(begin(arr),end(arr),q[i])-begin(arr);
+            // int y=upper_bound(begin(arr),end(arr),q[i])-begin(arr);
             
             if(x<arr.size()&&x>=0&&arr[x]==q[i])
                 res.push_back({q[i],q[i]});
@@ -41,9 +41,7 @@ public:
             else if(x==arr.size())
                 res.push_back({arr[x-1],-1});
             else 
-                res.push_back({arr[x-1],arr[y]});
-            // else
-            //     res.push_back({arr[x],arr[y]});
+                res.push_back({arr[x-1],arr[x]});
             
         }
         return res;
