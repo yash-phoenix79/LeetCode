@@ -40,10 +40,10 @@ public:
                 res.push_back({-1,arr[x]});
             else if(x==arr.size())
                 res.push_back({arr[x-1],-1});
-            else if(arr[x]>q[i])
+            else 
                 res.push_back({arr[x-1],arr[y]});
-            else
-                res.push_back({arr[x],arr[y]});
+            // else
+            //     res.push_back({arr[x],arr[y]});
             
         }
         return res;
