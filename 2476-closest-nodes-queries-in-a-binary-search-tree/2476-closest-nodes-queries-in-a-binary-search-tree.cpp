@@ -12,38 +12,37 @@
 class Solution {
 public:
     
-    vector<int>arr;
-    
-    void inorder(TreeNode* root){
-        
+    void inorder(TreeNode* root,vector<int>&arr){
         if(!root)
             return;
-        inorder(root->left);
+        inorder(root->left,arr);
         arr.push_back(root->val);
-        inorder(root->right);
-        
+        inorder(root->right,arr);
     }
     
     vector<vector<int>> closestNodes(TreeNode* root, vector<int>& q) {
+     
+        vector<vector<int>>res(q.size());
         
-        vector<vector<int>>res;
-        
-        inorder(root);
+        vector<int>arr;
+        inorder(root,arr);
         
         for(int i=0;i<q.size();i++){
-            int x=lower_bound(begin(arr),end(arr),q[i])-begin(arr);
-            // int y=upper_bound(begin(arr),end(arr),q[i])-begin(arr);
             
-            if(x<arr.size()&&x>=0&&arr[x]==q[i])
-                res.push_back({q[i],q[i]});
+            int x=lower_bound(arr.begin(),arr.end(),q[i])-arr.begin();
+            
+            if(x>=0&&x<arr.size()&&arr[x]==q[i])
+                res[i]={q[i],q[i]};
             else if(x==0)
-                res.push_back({-1,arr[x]});
+                res[i]={-1,arr[0]};
             else if(x==arr.size())
-                res.push_back({arr[x-1],-1});
-            else 
-                res.push_back({arr[x-1],arr[x]});
+                res[i]={arr[arr.size()-1],-1};
+            else
+                res[i]={arr[x-1],arr[x]};
+            
             
         }
         return res;
+        
     }
 };
