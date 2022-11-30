@@ -1,5 +1,6 @@
 class Solution {
 public:
+  
     bool uniqueOccurrences(vector<int>& arr) {
         int n=size(arr);
         
