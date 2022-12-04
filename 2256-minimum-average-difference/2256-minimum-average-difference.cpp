@@ -2,35 +2,39 @@ class Solution {
 public:
     int minimumAverageDifference(vector<int>& nums) {
         
-        int n=nums.size(),res;
-        int cnt1=0,cnt2=n;
+        int n=nums.size();
         
-        int ans=INT_MAX;
+       
+        int ans=INT_MAX,idx=-1;
         
-       long long int lSum=0,rSum=0;
-        for(int i=0;i<n;i++)
-            rSum+=nums[i];
+        vector<long long>pref(n),suff(n);
         
-        for(int i=0;i<n-1;i++){
-            cnt2--;
-            rSum-=nums[i];
-            cnt1++;
-            lSum+=nums[i];
+        pref[0]=nums[0];
+        for(int i=1;i<n;i++)
+            pref[i]=(long long)pref[i-1]+(long long)nums[i];
+        
+        suff[n-1]=0;
+        for(int i=n-2;i>=0;i--)
+            suff[i]=(long long)suff[i+1]+(long long)nums[i+1];
+        
+        
+        int cnt1=1,cnt2=n-1,f,s;
+        
+        for(int i=0;i<n;i++){
             
-            if(abs((lSum/cnt1)-(rSum/cnt2))<ans){
-                res=i;
-                ans=abs((lSum/cnt1)-(rSum/cnt2));
+            f=pref[i]/cnt1;
+            if(cnt2!=0)
+            s=suff[i]/cnt2;
+            else
+                 s=0;
+            if(abs(f-s)<ans){
+                ans=abs(f-s);
+                idx=i;
             }
             
+            cnt1++;
+            cnt2--;
         }
-        
-        lSum+=nums[n-1];
-        cnt1=n;
-        
-        if(lSum/cnt1<ans){
-            res=n-1;
-        }
-        
-        return res;
+        return idx;
     }
 };
