@@ -2,26 +2,26 @@ class Solution {
 public:
     
     vector<vector<int>>adj;
-    vector<int>cnt,res;
+    vector<int>res,cnt;
     
     
-    void dfs(int v,int p=-1){
+    void dfs(int i,int p=-1){
         
-        for(auto x:adj[v]){
+        for(auto x:adj[i]){
             if(x==p)continue;
-            dfs(x,v);
-            cnt[v]+=cnt[x];
-            res[v]+=res[x]+cnt[x];
+            dfs(x,i);
+            cnt[i]+=cnt[x];
+            res[i]+=res[x]+cnt[x];
         }
-        cnt[v]++;
+        cnt[i]++;
     }
     
-    void dfs2(int v,int n,int p=-1){
+    void dfs2(int i,int n,int p=-1){
         
-        for(auto x:adj[v]){
+        for(auto x:adj[i]){
             if(x==p)continue;
-            res[x]=res[v]-cnt[x]+n-cnt[x];
-            dfs2(x,n,v);
+            res[x]=res[i]-cnt[x]+n-cnt[x];
+            dfs2(x,n,i);    
         }
         
     }
@@ -29,20 +29,18 @@ public:
     vector<int> sumOfDistancesInTree(int n, vector<vector<int>>& e) {
         
         adj.resize(n);
+        res.resize(n);
+        cnt.resize(n);
         
         for(auto x:e){
-            
             adj[x[0]].push_back(x[1]);
             adj[x[1]].push_back(x[0]);
-            
         }
-        
-        cnt.resize(n);
-        res.resize(n);
         
         dfs(0);
         dfs2(0,n);
         
         return res;
+        
     }
 };
