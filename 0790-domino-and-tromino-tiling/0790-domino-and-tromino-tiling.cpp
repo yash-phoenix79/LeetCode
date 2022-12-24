@@ -1,19 +1,33 @@
 class Solution {
 public:
-    int numTilings(int N) {
-    int md=1e9;
-    md+=7;
-    vector<long long> v(1001,0);
-    v[1]=1;
-    v[2]=2;
-    v[3]=5;
-    if(N<=3)
-        return v[N];
-    for(int i=4;i<=N;++i){
-        v[i]=2*v[i-1]+v[i-3]; 
-        v[i]%=md;
-    }
-    return v[N];
     
-}
+    #define N 1000000007
+    
+    int numTilings(int n) {
+        
+        if(n==1)
+            return 1;
+        if(n==2)
+            return 2;
+        if(n==3)
+            return 5;
+        
+        long long int f=1,s=2,t=5;
+        n-=3;
+        
+         long long int res;
+        
+        while(n--){
+            
+            res=(2*(t%N)+f%N)%N;
+            f=s;
+            s=t;
+            t=res;
+            
+        }
+        
+        return res%N;
+        
+        
+    }
 };
